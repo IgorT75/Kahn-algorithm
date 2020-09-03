@@ -53,8 +53,7 @@ class TopoSortDfs {
   mutable vector<bool> _visited;
   mutable stack<size_t> _stack;
   public:
-    TopoSortDfs(const vector<vector<size_t>>& graph) : 
-      _graph(graph), _stack(stack<size_t>()), _visited(graph.size(), false) { }
+    TopoSortDfs(const vector<vector<size_t>>& graph) : _graph(graph) { }
 
     void dfs(size_t vertex) const {
       if (vertex >= _graph.size())
@@ -71,7 +70,8 @@ class TopoSortDfs {
     }
 
     vector<size_t> topologicalSortDfs() {
-      
+      _visited= vector<bool>(_graph.size(), false);
+      _stack = stack<size_t>();
       for (size_t i = 0, n = _graph.size(); i < n; ++i) {
         if (!_visited[i])
           dfs(i);
@@ -102,7 +102,7 @@ int main() {
     {  },
     { 4 },
     { 5 },
-    { 6 },
+    { 0, 6 },
   };
 
   auto topoSort1 = topologicalSortKahn(graph);
