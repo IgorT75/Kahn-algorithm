@@ -1,9 +1,10 @@
-#include <stdio.h>
+#include <cstdio>
 #include <queue>
 #include <vector>
 #include <map>
 #include <stack>
 #include <exception>
+#include <algorithm>
 
 using namespace std;
 
@@ -51,7 +52,7 @@ vector<size_t> topologicalSortKahn(const vector<vector<size_t>>& graph) {
 class TopoSortDfs {
   vector<vector<size_t>> _graph;
   mutable vector<bool> _visited;
-  mutable stack<size_t> _stack;
+  mutable vector<size_t> _vec;
   public:
     TopoSortDfs(const vector<vector<size_t>>& graph) : _graph(graph) { }
 
@@ -66,23 +67,19 @@ class TopoSortDfs {
           dfs(adjVert);
       }
       //printf("Pushing: %zu\n", vertex);
-      _stack.push(vertex);
+      _vec.push_back(vertex);
     }
 
     vector<size_t> topologicalSortDfs() {
       _visited= vector<bool>(_graph.size(), false);
-      _stack = stack<size_t>();
+      _vec = {};
       for (size_t i = 0, n = _graph.size(); i < n; ++i) {
         if (!_visited[i])
           dfs(i);
       }
-
-      vector<size_t> v;
-      while (!_stack.empty()) {
-        v.push_back(_stack.top());
-        _stack.pop();
-      }
-      return v;
+      
+      std::reverse(_vec.begin(), _vec.end());
+      return _vec;
     }
 };
 
