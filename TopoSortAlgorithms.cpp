@@ -1,8 +1,7 @@
-#include <cstdio>
+#include <сstdio>
 #include <queue>
 #include <vector>
 #include <map>
-#include <stack>
 #include <exception>
 #include <algorithm>
 
